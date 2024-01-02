@@ -1,4 +1,4 @@
-# canteen_hub
+# HBL Mobile App Project
 
 A new Flutter project.
 
