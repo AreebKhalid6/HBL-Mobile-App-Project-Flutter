@@ -1,29 +1,32 @@
+import 'package:flutter_carousel_slider/carousel_slider.dart';
+import 'package:flutter_carousel_slider/carousel_slider_indicators.dart';
+import 'package:flutter_carousel_slider/carousel_slider_transforms.dart';
 import 'package:canteen_hub/Pages/job_details.dart';
 import 'package:canteen_hub/Pages/profile.dart';
 import 'package:canteen_hub/Utils/job_post_card.dart';
 import 'package:canteen_hub/Utils/side_menu.dart';
 import 'package:canteen_hub/components/my_footer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_carousel_slider/carousel_slider.dart';
-import 'package:flutter_carousel_slider/carousel_slider_indicators.dart';
-import 'package:flutter_carousel_slider/carousel_slider_transforms.dart';
-import 'package:get/get.dart';
 
 import '../Utils/New_Morph_Box.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class JobPage extends StatefulWidget {
+  const JobPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<JobPage> createState() => _JobPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _JobPageState extends State<JobPage> {
   GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+
+  // future to fetch user details
+  Future<QuerySnapshot<Map<String, dynamic>>> getJobsDetails() async {
+    return await FirebaseFirestore.instance.collection('Jobs').get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +67,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(() => const ProfilePage());
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const ProfilePage(),
+                        ),
+                      );
                     },
                     child: CircleAvatar(
                       radius: 27.0,
@@ -202,30 +210,42 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  JobPostCard(
-                    jobTitle: 'IT Manager',
-                    onTap: () {
-                      Get.to(() => const JobDetailView());
-                    },
-                  ),
-                  JobPostCard(
-                    jobTitle: 'Accountant',
-                    onTap: () {
-                      Get.to(() => const JobDetailView());
-                    },
-                  ),
-                  JobPostCard(
-                    jobTitle: 'Office Boy',
-                    onTap: () {
-                      Get.to(() => const JobDetailView());
-                    },
-                  ),
-                  JobPostCard(
-                    jobTitle: 'Project Manager',
-                    onTap: () {
-                      Get.to(() => const JobDetailView());
-                    },
-                  ),
+                  FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      future: getJobsDetails(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("Error ${snapshot.error}");
+                        } else if (snapshot.hasData) {
+                          List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                              jobs = snapshot.data!.docs;
+                          return ListView.builder(
+                              itemCount: jobs.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return JobPostCard(
+                                  jobTitle: jobs[index]['title'],
+                                  jobDescription: jobs[index]['description'],
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const JobDetailView(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              });
+                        } else {
+                          return const Text('No Data');
+                        }
+                      }),
                   const MyFooter()
                 ],
               ),

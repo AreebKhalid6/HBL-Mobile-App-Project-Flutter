@@ -32,6 +32,7 @@ class _LoginpageState extends State<Loginpage> {
       );
 
       // Continue using the context after the asynchronous operation if needed
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Login successful!"),
@@ -39,15 +40,13 @@ class _LoginpageState extends State<Loginpage> {
       );
     } on FirebaseAuthException catch (e) {
       // Use the context in the catch block
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            e.code == 'user-not-found'
-                ? "No user found for that email."
-                : "Wrong password provided for that user",
-          ),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text(
+      //       e.code,
+      //     ),
+      //   ),
+      // );
     }
   }
 

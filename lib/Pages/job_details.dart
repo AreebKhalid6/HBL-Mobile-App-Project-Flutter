@@ -1,6 +1,7 @@
-import 'package:canteen_hub/Pages/homePage.dart';
+import 'package:canteen_hub/Pages/jobPage.dart';
 import 'package:canteen_hub/Pages/upload_resume.dart';
 import 'package:canteen_hub/Utils/apply_now_btn.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.to(() => const HomePage());
+                      Navigator.pop(context);
                     },
                     child: NeumorphBox(
                       child: const Icon(
@@ -157,7 +158,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: InkWell(
                                 onTap: () {
-                                  Get.to(() => const UploadResume());
+                                  // Get.to(() => const UploadResume());
                                 },
                                 child: const ApplyNowBtn(),
                               ),

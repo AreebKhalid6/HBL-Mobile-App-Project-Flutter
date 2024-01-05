@@ -128,10 +128,10 @@ class _LoginState extends State<Login> {
                                   showpassword = !showpassword;
                                 });
                               },
-                              onTap: () {
+                              onTap: () async {
                                 final String email = emailController.text;
                                 final String password = passwordController.text;
-                                authServices
+                                await authServices
                                     .login(
                                         context: context,
                                         email: email,

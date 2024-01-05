@@ -1,4 +1,4 @@
-import 'package:canteen_hub/Pages/homePage.dart';
+import 'package:canteen_hub/Pages/jobPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +21,7 @@ class SubmitSuccess extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.to(() => const HomePage());
+                      // Get.to(() => const HomePage());
                     },
                     child: NeumorphBox(
                       child: const Icon(
@@ -90,7 +90,7 @@ class SubmitSuccess extends StatelessWidget {
                         horizontal: 30, vertical: 20),
                     child: InkWell(
                       onTap: () {
-                        Get.to(() => const HomePage());
+                        // Get.to(() => const HomePage());
                       },
                       child: Container(
                         width: double.infinity,

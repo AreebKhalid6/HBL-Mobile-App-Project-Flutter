@@ -2,12 +2,16 @@
 import 'package:canteen_hub/Pages/Loginpage.dart';
 import 'package:canteen_hub/Pages/canteen_view.dart';
 import 'package:canteen_hub/Pages/favourite_post.dart';
+import 'package:canteen_hub/Pages/jobPage.dart';
 import 'package:canteen_hub/Pages/my_orders.dart';
 import 'package:canteen_hub/Pages/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SideMenu extends StatefulWidget {
   const SideMenu({Key? key}) : super(key: key);
@@ -17,6 +21,17 @@ class SideMenu extends StatefulWidget {
 }
 
 class _SideMenuState extends State<SideMenu> {
+  // current logged in user
+  final User? currentUser = FirebaseAuth.instance.currentUser;
+
+  // future to fetch user details
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserDetails() async {
+    return await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser!.email)
+        .get();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +63,12 @@ class _SideMenuState extends State<SideMenu> {
                       flex: 1,
                       child: InkWell(
                         onTap: () {
-                          Get.to(() => const ProfilePage());
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (context) => const ProfilePage(),
+                            ),
+                          );
                         },
                         child: CircleAvatar(
                           radius: 35.0,
@@ -66,29 +86,49 @@ class _SideMenuState extends State<SideMenu> {
                       flex: 2,
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Momin Nadeem',
-                              overflow: TextOverflow.clip,
-                              style: GoogleFonts.raleway(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              'IT Department',
-                              style: GoogleFonts.raleway(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: FutureBuilder<
+                                DocumentSnapshot<Map<String, dynamic>>>(
+                            future: getUserDetails(),
+                            builder: (context, snapshot) {
+                              // loading
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text("Error ${snapshot.error}");
+                              } else if (snapshot.hasData) {
+                                // extract data
+                                Map<String, dynamic>? user =
+                                    snapshot.data!.data();
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      user!['fullName'] ?? 'Momin Nadeem',
+                                      overflow: TextOverflow.clip,
+                                      style: GoogleFonts.raleway(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Text(
+                                      '@${user['username']}',
+                                      style: GoogleFonts.raleway(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return const Text('No Data');
+                              }
+                            }),
                       ),
                     ),
                   ],
@@ -106,7 +146,13 @@ class _SideMenuState extends State<SideMenu> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => const ProfilePage());
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const ProfilePage(),
+                        ),
+                      );
                     },
                     child: Text(
                       'Profile',
@@ -172,10 +218,16 @@ class _SideMenuState extends State<SideMenu> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => const FavouritePost());
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const JobPage(),
+                        ),
+                      );
                     },
                     child: Text(
-                      'Favourite Post',
+                      'Job Listing',
                       style: GoogleFonts.raleway(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,

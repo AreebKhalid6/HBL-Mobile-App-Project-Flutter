@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Utils/job_post_card.dart';
-import 'homePage.dart';
+import 'jobPage.dart';
 import 'job_details.dart';
 
 class FavouritePost extends StatefulWidget {
@@ -27,7 +27,7 @@ class _FavouritePost extends State<FavouritePost> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.to(() => const HomePage());
+                      // Get.to(() => const HomePage());
                     },
                     child: NeumorphBox(
                       child: const Icon(
@@ -68,22 +68,24 @@ class _FavouritePost extends State<FavouritePost> {
                   ),
                   JobPostCard(
                     jobTitle: 'Accountant',
+                    jobDescription:
+                        'Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry Lorem Ipsum has been the industry.Lorem Ipsum has been the industry Lorem Ipsum has been the industry',
                     onTap: () {
-                      Get.to(() => const JobDetailView());
+                      // Get.to(() => const JobDetailView());
                     },
                   ),
-                  JobPostCard(
-                    jobTitle: 'It Manager',
-                    onTap: () {
-                      Get.to(() => const JobDetailView());
-                    },
-                  ),
-                  JobPostCard(
-                    jobTitle: 'Office Boy',
-                    onTap: () {
-                      Get.to(() => const JobDetailView());
-                    },
-                  ),
+                  // JobPostCard(
+                  //   jobTitle: 'It Manager',
+                  //   onTap: () {
+                  //     Get.to(() => const JobDetailView());
+                  //   },
+                  // ),
+                  // JobPostCard(
+                  //   jobTitle: 'Office Boy',
+                  //   onTap: () {
+                  //     Get.to(() => const JobDetailView());
+                  //   },
+                  // ),
                 ],
               ),
             ),

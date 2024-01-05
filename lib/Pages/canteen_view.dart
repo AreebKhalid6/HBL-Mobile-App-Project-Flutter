@@ -1,7 +1,7 @@
 import 'dart:ffi';
 import 'package:canteen_hub/Pages/Login.dart';
 import 'package:canteen_hub/Pages/cart.dart';
-import 'package:canteen_hub/Pages/homePage.dart';
+import 'package:canteen_hub/Pages/jobPage.dart';
 import 'package:canteen_hub/Pages/profile.dart';
 import 'package:canteen_hub/Pages/tea.dart';
 import 'package:canteen_hub/Utils/New_Morph_Box.dart';
@@ -31,7 +31,7 @@ class CanteenView extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.to(() => const HomePage());
+                      // Get.to(() => const HomePage());
                     },
                     child: NeumorphBox(
                       child: const Icon(

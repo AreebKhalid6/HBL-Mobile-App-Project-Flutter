@@ -35,6 +35,16 @@ class AuthServices {
             content: Text(e.code),
           ),
         );
+      } catch (e) {
+        // ignore: use_build_context_synchronously
+        Navigator.pop(context);
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(e.toString()),
+          ),
+        );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -112,6 +122,19 @@ class AuthServices {
           .doc(userCredential.user!.email)
           .set({
         'email': userCredential.user!.email,
+        'username': userName,
+        'fullName': fullName,
+      });
+    }
+  }
+
+  updateUserDocument(User user, String userName, String fullName) async {
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(user.email)
+          .update({
+        'email': user.email,
         'username': userName,
         'fullName': fullName,
       });
