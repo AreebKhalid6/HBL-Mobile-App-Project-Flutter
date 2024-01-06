@@ -1,5 +1,6 @@
 // import 'package:canteen_hub/Pages/Login.dart';
 import 'package:canteen_hub/Pages/Loginpage.dart';
+import 'package:canteen_hub/Pages/about.dart';
 import 'package:canteen_hub/Pages/canteen_view.dart';
 import 'package:canteen_hub/Pages/favourite_post.dart';
 import 'package:canteen_hub/Pages/jobPage.dart';
@@ -246,7 +247,13 @@ class _SideMenuState extends State<SideMenu> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: InkWell(
                     onTap: () {
-                      // Get.to(() => const Login());
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                          builder: (context) => const About(),
+                        ),
+                      );
                     },
                     child: Text(
                       'About',
