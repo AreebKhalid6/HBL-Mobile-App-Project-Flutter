@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:canteen_hub/Pages/jobPage.dart';
 import 'package:canteen_hub/Pages/job_details.dart';
 import 'package:canteen_hub/Pages/submit_success.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Utils/New_Morph_Box.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class UploadResume extends StatefulWidget {
   const UploadResume({super.key});
@@ -18,6 +21,10 @@ class UploadResume extends StatefulWidget {
 class _UploadResumeState extends State<UploadResume> {
   File? file;
   String filename = '';
+
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -169,8 +176,41 @@ class _UploadResumeState extends State<UploadResume> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30, vertical: 20),
                         child: InkWell(
-                          onTap: () {
+                          onTap: () async {
                             // Get.to(() => const SubmitSuccess());
+                            if (file != null) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                              firebase_storage.Reference ref =
+                                  storage.ref(filename);
+                              firebase_storage.UploadTask uploadTask =
+                                  ref.putFile(file!.absolute);
+
+                              await Future.value(uploadTask).whenComplete(() {
+                                Navigator.pop(context);
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    behavior: SnackBarBehavior.floating,
+                                    content: Text(
+                                        "Your resume uploaded successfully"),
+                                  ),
+                                );
+
+                                Navigator.pushReplacement(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => const JobPage(),
+                                  ),
+                                );
+                              });
+                            } else {
+                              print('No file selected');
+                            }
                           },
                           child: Container(
                             width: double.infinity,

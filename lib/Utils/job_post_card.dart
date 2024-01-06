@@ -1,5 +1,6 @@
 import 'package:canteen_hub/Pages/upload_resume.dart';
 import 'package:canteen_hub/Utils/apply_now_btn.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,7 +80,12 @@ class _JobPostCardState extends State<JobPostCard> {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.to(() => const UploadResume());
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => const UploadResume(),
+                      ),
+                    );
                   },
                   child: const ApplyNowBtn(),
                 )
