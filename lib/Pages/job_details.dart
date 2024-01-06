@@ -9,7 +9,13 @@ import 'package:get/get.dart';
 import '../Utils/New_Morph_Box.dart';
 
 class JobDetailView extends StatefulWidget {
-  const JobDetailView({Key? key}) : super(key: key);
+  String jobTitle;
+  String jobDescription;
+  JobDetailView({
+    Key? key,
+    required this.jobTitle,
+    required this.jobDescription,
+  }) : super(key: key);
 
   @override
   State<JobDetailView> createState() => _JobDetailViewState();
@@ -76,42 +82,13 @@ class _JobDetailViewState extends State<JobDetailView> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Text(
-                            'IT Manager',
+                            widget.jobTitle,
                             style: GoogleFonts.raleway(
                               color: const Color(0xff0A9984),
                               fontWeight: FontWeight.w700,
                               fontSize: 24,
                             ),
                           ),
-                        ),
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.star,
-                              size: 25,
-                              color: Colors.yellow,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 25,
-                              color: Colors.yellow,
-                            ),
-                            Icon(
-                              Icons.star,
-                              size: 25,
-                              color: Colors.yellow,
-                            ),
-                            Icon(
-                              Icons.star_border,
-                              size: 25,
-                              color: Colors.yellow,
-                            ),
-                            Icon(
-                              Icons.star_border,
-                              size: 25,
-                              color: Colors.yellow,
-                            ),
-                          ],
                         ),
                         Divider(
                           color: Colors.grey.shade300,
@@ -144,7 +121,7 @@ class _JobDetailViewState extends State<JobDetailView> {
                           height: 10,
                         ),
                         Text(
-                          'Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                          widget.jobDescription,
                           textAlign: TextAlign.justify,
                           overflow: TextOverflow.fade,
                           style: GoogleFonts.raleway(
@@ -158,7 +135,13 @@ class _JobDetailViewState extends State<JobDetailView> {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: InkWell(
                                 onTap: () {
-                                  // Get.to(() => const UploadResume());
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) =>
+                                          const UploadResume(),
+                                    ),
+                                  );
                                 },
                                 child: const ApplyNowBtn(),
                               ),

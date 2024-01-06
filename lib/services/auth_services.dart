@@ -140,4 +140,17 @@ class AuthServices {
       });
     }
   }
+
+  createResumeDocument(User user, String userName, String fullName) async {
+    if (user != null) {
+      await FirebaseFirestore.instance
+          .collection('Resume')
+          .doc(user.email)
+          .set({
+        'email': user.email,
+        'username': userName,
+        'fullName': fullName,
+      });
+    }
+  }
 }

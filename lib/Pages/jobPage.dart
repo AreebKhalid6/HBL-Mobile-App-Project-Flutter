@@ -235,8 +235,11 @@ class _JobPageState extends State<JobPage> {
                                     Navigator.push(
                                       context,
                                       CupertinoPageRoute(
-                                        builder: (context) =>
-                                            const JobDetailView(),
+                                        builder: (context) => JobDetailView(
+                                          jobTitle: jobs[index]['title'],
+                                          jobDescription: jobs[index]
+                                              ['description'],
+                                        ),
                                       ),
                                     );
                                   },

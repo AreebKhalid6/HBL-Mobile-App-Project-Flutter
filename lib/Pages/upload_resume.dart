@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:canteen_hub/Pages/job_details.dart';
 import 'package:canteen_hub/Pages/submit_success.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +16,8 @@ class UploadResume extends StatefulWidget {
 }
 
 class _UploadResumeState extends State<UploadResume> {
+  File? file;
+  String filename = '';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +31,7 @@ class _UploadResumeState extends State<UploadResume> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.to(() => const JobDetailView());
+                      Navigator.pop(context);
                     },
                     child: NeumorphBox(
                       child: const Icon(
@@ -94,39 +99,70 @@ class _UploadResumeState extends State<UploadResume> {
                       const SizedBox(
                         height: 10.0,
                       ),
-                      Container(
-                        height: 130,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffEBEBEB),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
+                      GestureDetector(
+                        onTap: () async {
+                          final result = await FilePicker.platform.pickFiles();
+                          if (result == null) return;
+
+                          final _file = result.files.first;
+                          final File selecteFile = File(_file.path!);
+                          setState(() {
+                            file = selecteFile;
+                            filename = _file.name;
+                          });
+                        },
+                        child: Container(
+                          height: file != null ? 80 : 130,
+                          width: file != null ? 240 : 200,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffEBEBEB),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
                               color: const Color(0xff7C7C7C),
                               style: BorderStyle.solid,
-                              width: 2),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.document_scanner_outlined,
-                              color: Color(0xff009984),
-                              size: 30,
+                              width: 2,
                             ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              'TAP HERE TO\nATTACH A FILE',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.raleway(
-                                fontSize: 12,
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xff7C7C7C),
-                              ),
-                            ),
-                          ],
+                          ),
+                          child: file != null
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    const Icon(
+                                      Icons.file_upload,
+                                      color: Color(0xff7C7C7C),
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      filename,
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.document_scanner_outlined,
+                                      color: Color(0xff009984),
+                                      size: 30,
+                                    ),
+                                    const SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    Text(
+                                      'TAP HERE TO\nATTACH A FILE',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.raleway(
+                                        fontSize: 12,
+                                        letterSpacing: 1,
+                                        fontWeight: FontWeight.w500,
+                                        color: const Color(0xff7C7C7C),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                         ),
                       ),
                       Padding(
@@ -134,7 +170,7 @@ class _UploadResumeState extends State<UploadResume> {
                             horizontal: 30, vertical: 20),
                         child: InkWell(
                           onTap: () {
-                            Get.to(() => const SubmitSuccess());
+                            // Get.to(() => const SubmitSuccess());
                           },
                           child: Container(
                             width: double.infinity,
