@@ -1,7 +1,5 @@
-import 'package:canteen_hub/Pages/profile.dart';
-import 'package:canteen_hub/Utils/New_Morph_Box.dart';
 import 'package:canteen_hub/Utils/side_menu.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:canteen_hub/components/my_header.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,88 +27,43 @@ class _ContactState extends State<Contact> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 20.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        _globalKey.currentState?.openDrawer();
-                      },
-                      child: NeumorphBox(
-                        child: const Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      'HBL ASSET HUB',
-                      style: GoogleFonts.raleway(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: const Color(0xff009984),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => const ProfilePage(),
-                          ),
-                        );
-                      },
-                      child: CircleAvatar(
-                        radius: 27.0,
-                        backgroundColor: const Color(0xff009984),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/images/avatar.png',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Contact Us',
-                  style: GoogleFonts.raleway(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black87,
-                  ),
-                ),
-              ),
+              MyHeader(globalKey: _globalKey),
               const SizedBox(
                 height: 20,
               ),
               Stack(
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 children: [
-                  Opacity(
-                    opacity: 0.3,
-                    child: Container(
-                      height: 200,
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                          color: const Color(0xff0A9984),
-                          borderRadius: BorderRadius.circular(10)),
-                    ),
-                  ),
                   Image.asset(
-                    'assets/images/contact-avatar.png',
-                    height: 200,
+                    'assets/images/contact-banner.png',
+                    fit: BoxFit.fitHeight,
+                    height: 170,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, top: 20),
+                        child: Text(
+                          'Contact Us',
+                          style: GoogleFonts.raleway(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w800),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20, bottom: 20),
+                        child: Text(
+                          'ENRICH YOUR PROFESSIONAL\nJOURNEY WITH HBL',
+                          style: GoogleFonts.raleway(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -147,7 +100,7 @@ class _ContactState extends State<Contact> {
                           width: 10,
                         ),
                         Text(
-                          'syedhamzali@tutanota.com',
+                          'contact@hblasset.com',
                           style: GoogleFonts.raleway(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -166,10 +119,9 @@ class _ContactState extends State<Contact> {
                               .join('&');
                         }
 
-// ···
                         final Uri emailUri = Uri(
                           scheme: 'mailto',
-                          path: 'syedhamzali@tutanota.com',
+                          path: 'contact@hblasset.com',
                           query: encodeQueryParameters(<String, String>{
                             'subject': 'Example Subject & Symbols are allowed!',
                           }),

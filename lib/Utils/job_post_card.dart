@@ -21,7 +21,6 @@ class JobPostCard extends StatefulWidget {
 }
 
 class _JobPostCardState extends State<JobPostCard> {
-  bool fav = false;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -33,41 +32,19 @@ class _JobPostCardState extends State<JobPostCard> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.jobTitle,
-                    style: GoogleFonts.raleway(
-                      color: const Color(0xff009984),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 24,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        fav = !fav;
-                      });
-                    },
-                    icon: fav
-                        ? const Icon(
-                            Icons.favorite_rounded,
-                            color: Color(0xffF9595F),
-                          )
-                        : const Icon(
-                            Icons.favorite_outline_rounded,
-                            color: Color(0xff7c7c7c),
-                          ),
-                  ),
-                ],
+              child: Text(
+                widget.jobTitle,
+                style: GoogleFonts.raleway(
+                  color: const Color(0xff009984),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 15),
               child: Text(
                 widget.jobDescription,
-                // 'Lorem Ipsum is simply dummy text of the printing and type setting industry. Lorem Ipsum has been the industry Lorem Ipsum has been the industry.Lorem Ipsum has been the industry Lorem Ipsum has been the industry',
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.raleway(

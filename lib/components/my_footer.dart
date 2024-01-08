@@ -13,7 +13,7 @@ class MyFooter extends StatelessWidget {
       child: const Padding(
         padding: EdgeInsets.only(top: 14),
         child: Text(
-          '© Copyright 2023 HBL Asset Management Limited.',
+          '© Copyright 2024 HBL Asset Management Limited.',
           style: TextStyle(color: Colors.white),
         ),
       ),
