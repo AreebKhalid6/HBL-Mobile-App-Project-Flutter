@@ -2,9 +2,9 @@ import 'package:canteen_hub/Pages/upload_resume.dart';
 import 'package:canteen_hub/Utils/apply_now_btn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// ignore: must_be_immutable
 class JobPostCard extends StatefulWidget {
   String jobTitle;
   String jobDescription;

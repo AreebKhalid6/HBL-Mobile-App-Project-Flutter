@@ -129,28 +129,13 @@ class AuthServices {
   }
 
   updateUserDocument(User user, String userName, String fullName) async {
-    if (user != null) {
-      await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(user.email)
-          .update({
-        'email': user.email,
-        'username': userName,
-        'fullName': fullName,
-      });
-    }
-  }
-
-  createResumeDocument(User user, String userName, String fullName) async {
-    if (user != null) {
-      await FirebaseFirestore.instance
-          .collection('Resume')
-          .doc(user.email)
-          .set({
-        'email': user.email,
-        'username': userName,
-        'fullName': fullName,
-      });
-    }
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(user.email)
+        .update({
+      'email': user.email,
+      'username': userName,
+      'fullName': fullName,
+    });
   }
 }

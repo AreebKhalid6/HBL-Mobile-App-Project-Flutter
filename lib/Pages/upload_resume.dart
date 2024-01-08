@@ -1,12 +1,8 @@
 import 'dart:io';
-
 import 'package:canteen_hub/Pages/jobPage.dart';
-import 'package:canteen_hub/Pages/job_details.dart';
-import 'package:canteen_hub/Pages/submit_success.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Utils/New_Morph_Box.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;

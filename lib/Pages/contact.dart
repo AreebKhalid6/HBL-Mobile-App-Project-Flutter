@@ -4,16 +4,17 @@ import 'package:canteen_hub/Utils/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class About extends StatefulWidget {
-  const About({super.key});
+class Contact extends StatefulWidget {
+  const Contact({super.key});
 
   @override
-  State<About> createState() => _AboutState();
+  State<Contact> createState() => _ContactState();
 }
 
-class _AboutState extends State<About> {
-  GlobalKey<ScaffoldState> _globalKey = GlobalKey<ScaffoldState>();
+class _ContactState extends State<Contact> {
+  final _globalKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,6 @@ class _AboutState extends State<About> {
                     InkWell(
                       onTap: () {
                         _globalKey.currentState?.openDrawer();
-                        // Get.to(() => const Login());
                       },
                       child: NeumorphBox(
                         child: const Icon(
@@ -83,7 +83,7 @@ class _AboutState extends State<About> {
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: Text(
-                  'About Us',
+                  'Contact Us',
                   style: GoogleFonts.raleway(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
@@ -109,7 +109,7 @@ class _AboutState extends State<About> {
                     ),
                   ),
                   Image.asset(
-                    'assets/images/manager.png',
+                    'assets/images/contact-avatar.png',
                     height: 200,
                   )
                 ],
@@ -129,33 +129,85 @@ class _AboutState extends State<About> {
                 ),
               ),
               const SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'The company launched its first fund in 2007 and has developed a track record of strong and consistent growth over the past decade. With a nationwide foot print of retail and corporate clients, HBL AMC is one of the largest private fund management company in the country. During the year 2016, HBL AMC acquired PICIC Asset Management Company Limited which has subsequently merged into HBL AMC.',
-                  textAlign: TextAlign.justify,
-                  style: GoogleFonts.raleway(
-                    fontSize: 15,
-                    color: Colors.black45,
-                  ),
-                ),
-              ),
-              const SizedBox(
                 height: 20,
               ),
-              // Center(
-              //   child: Text(
-              //     'Vision and Mission',
-              //     textAlign: TextAlign.justify,
-              //     style: GoogleFonts.raleway(
-              //       fontSize: 20,
-              //       fontWeight: FontWeight.w600,
-              //       color: Colors.black45,
-              //     ),
-              //   ),
-              // ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.mail_outline_rounded,
+                          color: Color(0xff009984),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'syedhamzali@tutanota.com',
+                          style: GoogleFonts.raleway(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        String? encodeQueryParameters(
+                            Map<String, String> params) {
+                          return params.entries
+                              .map((MapEntry<String, String> e) =>
+                                  '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                              .join('&');
+                        }
+
+// ···
+                        final Uri emailUri = Uri(
+                          scheme: 'mailto',
+                          path: 'syedhamzali@tutanota.com',
+                          query: encodeQueryParameters(<String, String>{
+                            'subject': 'Example Subject & Symbols are allowed!',
+                          }),
+                        );
+                        if (await canLaunchUrl(emailUri)) {
+                          launchUrl(emailUri);
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              content: Text('Something went wrong'),
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: 40,
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff009984),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Send email',
+                            style: GoogleFonts.raleway(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

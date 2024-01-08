@@ -1,9 +1,6 @@
-import 'package:canteen_hub/Pages/jobPage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Utils/New_Morph_Box.dart';
-import 'job_details.dart';
 
 class SubmitSuccess extends StatelessWidget {
   const SubmitSuccess({Key? key}) : super(key: key);

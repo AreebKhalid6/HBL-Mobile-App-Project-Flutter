@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
+// ignore: must_be_immutable
 class NeumorphBox extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final child;
   double? height;
   NeumorphBox({Key? key, required this.child, this.height}) : super(key: key);
